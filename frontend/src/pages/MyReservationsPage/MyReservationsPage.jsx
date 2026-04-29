@@ -389,6 +389,17 @@ function MyReservationsPage() {
     return tags;
   }, [activeFilter, selectedDate, searchTerm]);
 
+  const filterOptions = [
+    { value: "all", label: "Totes", count: reservations.length },
+    { value: "active", label: "Actives", count: activeReservations.length },
+    { value: "past", label: "Finalitzades", count: pastReservations.length },
+    {
+      value: "cancelled",
+      label: "Cancel·lades",
+      count: cancelledReservations.length,
+    },
+  ];
+
   return (
     <div className="my-res__page">
       <div
@@ -534,10 +545,23 @@ function MyReservationsPage() {
                 )}
               </div>
 
-              <div
-                ref={segmentedRef}
-                className={`my-res__segmented ${isMobileView ? "my-res__segmented--mobile" : ""}`}
-              >
+              <div ref={segmentedRef}>
+                <select
+                  className="my-res__mobile-filter-select"
+                  value={activeFilter}
+                  onChange={(e) => handleFilterChange(e.target.value)}
+                  aria-label="Filtrar reserves"
+                >
+                  {filterOptions.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label} ({option.count})
+                    </option>
+                  ))}
+                </select>
+
+                <div
+                  className={`my-res__segmented ${isMobileView ? "my-res__segmented--mobile" : ""}`}
+                >
                 <button
                   type="button"
                   className={`my-res__segmented-btn ${
@@ -581,6 +605,7 @@ function MyReservationsPage() {
                   <span className="my-res__segmented-label">Cancel·lades</span>
                   <span className="my-res__segmented-count">{cancelledReservations.length}</span>
                 </button>
+                </div>
               </div>
             </section>
 
