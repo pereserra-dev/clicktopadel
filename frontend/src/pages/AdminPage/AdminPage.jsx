@@ -2257,7 +2257,7 @@ function AdminPage() {
             {activeTab === "users" && (
               <section
                 ref={usersSectionRef}
-                className="fade-in-up delay-2 admin__section"
+                className="fade-in-up delay-2 admin__section admin__section--users"
               >
                 <div
                   className={`admin__section-header ${
@@ -2375,7 +2375,7 @@ function AdminPage() {
 
                   {filteredUsers.length > 0 ? (
                     <>
-                      <div className="admin__table-wrapper">
+                      <div className="admin__table-wrapper admin__table-wrapper--users">
                         <table className="admin__table">
                           <thead>
                             <tr>
@@ -2399,6 +2399,9 @@ function AdminPage() {
                               return (
                                 <Fragment key={user.id}>
                                   <tr
+                                    className={`admin__user-table-row ${
+                                      isSelectedUser ? "admin__user-table-row--selected" : ""
+                                    }`}
                                     ref={(node) => {
                                       if (node) {
                                         userRowRefs.current[user.id] = node;
@@ -2407,10 +2410,10 @@ function AdminPage() {
                                       }
                                     }}
                                   >
-                                    <td>{user.id}</td>
-                                    <td>{user.nom}</td>
-                                    <td>{user.email}</td>
-                                    <td>
+                                    <td data-label="ID">{user.id}</td>
+                                    <td data-label="Nom">{user.nom}</td>
+                                    <td data-label="Email">{user.email}</td>
+                                    <td data-label="Rol">
                                       <span
                                         className={`admin__role-badge ${
                                           (user.rol || "").toLowerCase() === "admin"
@@ -2421,17 +2424,17 @@ function AdminPage() {
                                         {user.rol}
                                       </span>
                                     </td>
-                                    <td>{formatDateTime(user.created_at)}</td>
-                                    <td>
+                                    <td data-label="Registre">{formatDateTime(user.created_at)}</td>
+                                    <td data-label="Accions">
                                       <div className="admin__table-actions">
                                         <button
                                           type="button"
-                                          className={`btn btn-light btn-sm ${
+                                          className={`btn btn-light btn-sm admin__user-view-button ${
                                             isSelectedUser ? "admin__user-view-button--active" : ""
                                           }`}
                                           onClick={() => handleViewUserDetail(user.id)}
                                         >
-                                          {isSelectedUser ? "Amagar" : "Veure"}
+                                          {isSelectedUser ? "Amagar detall" : "Veure detall"}
                                         </button>
 
                                         <div className="admin__role-action-wrap">
