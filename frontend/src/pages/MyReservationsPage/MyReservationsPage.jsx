@@ -490,7 +490,6 @@ function MyReservationsPage() {
                 className={`my-res__section-header ${isMobileView ? "my-res__section-header--mobile" : ""}`}
               >
                 <div>
-                  <span className="pb-kicker">Historial</span>
                   <h2 className="pb-panel-title">Historial de reserves</h2>
                   <p className="pb-panel-text">
                     Filtra ràpidament entre totes les reserves, les actives i
@@ -498,9 +497,11 @@ function MyReservationsPage() {
                   </p>
                 </div>
 
-                <span className="pb-badge-pill pb-badge-pill--blue">
-                  {filteredReservations.length} {filterLabel}
-                </span>
+                <div className="my-res__summary-total">
+                  <span className="pb-badge pb-badge--primary">
+                    {filteredReservations.length} Totals
+                  </span>
+                </div>
               </div>
 
               <div className="my-res__tools-row">
