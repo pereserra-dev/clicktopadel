@@ -239,42 +239,44 @@
 }
 
 .login__input--password {
-  padding-right: 6.1rem;
+  padding-right: 3.25rem;
 }
 
 .login__password-wrapper {
   position: relative;
-  display: block;
+  display: flex;
+  align-items: center;
 }
 
 .login__password-wrapper--mobile {
-  display: block;
+  flex-direction: row;
 }
 
 .login__show-button {
   position: absolute;
+  right: 0.55rem;
   top: 50%;
-  right: 0.45rem;
   transform: translateY(-50%);
-  border: 1px solid #cbd5e1;
-  border-radius: 12px;
-  padding: 0 0.75rem;
-  background: rgba(255, 255, 255, 0.94);
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 0;
+  border-radius: 999px;
+  padding: 0;
+  background: rgba(248, 250, 252, 0.92);
   cursor: pointer;
-  font-weight: 700;
-  min-width: auto;
-  height: 38px;
-  color: #334155;
+  color: #475569;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   transition:
-    border-color 0.18s ease,
-    color 0.18s ease,
     background-color 0.18s ease,
+    color 0.18s ease,
     box-shadow 0.18s ease;
 }
 
 .login__show-button--mobile {
-  width: auto;
-  min-height: 0;
+  width: 2.2rem;
+  height: 2.2rem;
 }
 
 .login__show-button:focus-visible,
@@ -284,9 +286,13 @@
 }
 
 .login__show-button:hover {
-  border-color: #93c5fd;
-  color: #1d4ed8;
   background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.login__show-button svg {
+  width: 1.15rem;
+  height: 1.15rem;
 }
 
 .login__submit-button {
@@ -565,15 +571,11 @@
   }
 
   .login__input--password {
-    padding-right: 5.15rem;
+    padding-right: 3rem;
   }
 
   .login__show-button {
-    right: 0.35rem;
-    height: 34px;
-    padding: 0 0.55rem;
-    border-radius: 10px;
-    font-size: 0.82rem;
+    right: 0.42rem;
   }
 
   .login__caps-warning {
