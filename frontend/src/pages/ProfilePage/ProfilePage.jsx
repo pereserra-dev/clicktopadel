@@ -4,6 +4,68 @@ import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 import { scrollToElementWithOffset, normalizeSpaces } from "../../utils/helpers";
 import "./ProfilePage.css";
 
+function renderPasswordToggleIcon(isVisible) {
+  if (isVisible) {
+    return (
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+      >
+        <path
+          d="M3 3L21 21"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+        />
+        <path
+          d="M10.58 10.58C10.22 10.94 10 11.44 10 12C10 13.1 10.9 14 12 14C12.56 14 13.06 13.78 13.42 13.42"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+        />
+        <path
+          d="M9.36 5.35C10.2 5.12 11.08 5 12 5C16.5 5 20.27 7.91 21.5 12C21.16 13.12 20.58 14.15 19.82 15.02"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+        />
+        <path
+          d="M6.62 6.62C4.69 7.82 3.22 9.7 2.5 12C3.73 16.09 7.5 19 12 19C13.78 19 15.42 18.55 16.83 17.75"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+        />
+      </svg>
+    );
+  }
+
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <path
+        d="M2.5 12C3.73 7.91 7.5 5 12 5C16.5 5 20.27 7.91 21.5 12C20.27 16.09 16.5 19 12 19C7.5 19 3.73 16.09 2.5 12Z"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M12 15C13.66 15 15 13.66 15 12C15 10.34 13.66 9 12 9C10.34 9 9 10.34 9 12C9 13.66 10.34 15 12 15Z"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 function ProfilePage() {
   const topFeedbackRef = useRef(null);
   const profileFormRef = useRef(null);
@@ -928,8 +990,13 @@ function ProfilePage() {
                           type="button"
                           className={`profile__show-button ${isTabletOrMobile ? "profile__show-button--mobile" : ""}`}
                           onClick={() => setShowCurrentPassword((prev) => !prev)}
+                          aria-label={
+                            showCurrentPassword
+                              ? "Ocultar contrasenya actual"
+                              : "Mostrar contrasenya actual"
+                          }
                         >
-                          {showCurrentPassword ? "Ocultar" : "Mostrar"}
+                          {renderPasswordToggleIcon(showCurrentPassword)}
                         </button>
                       </div>
 
@@ -965,8 +1032,13 @@ function ProfilePage() {
                           type="button"
                           className={`profile__show-button ${isTabletOrMobile ? "profile__show-button--mobile" : ""}`}
                           onClick={() => setShowNewPassword((prev) => !prev)}
+                          aria-label={
+                            showNewPassword
+                              ? "Ocultar nova contrasenya"
+                              : "Mostrar nova contrasenya"
+                          }
                         >
-                          {showNewPassword ? "Ocultar" : "Mostrar"}
+                          {renderPasswordToggleIcon(showNewPassword)}
                         </button>
                       </div>
 
