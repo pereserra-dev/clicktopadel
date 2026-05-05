@@ -757,7 +757,7 @@ body:has(.ap-floating-action) .backToTop {
   }
 
   body:has(.ap-floating-action) .backToTop {
-    bottom: max(456px, calc(env(safe-area-inset-bottom) + 456px));
+    bottom: max(372px, calc(env(safe-area-inset-bottom) + 372px));
   }
 
   .pb-loading-shell {
