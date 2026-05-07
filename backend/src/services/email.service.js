@@ -25,12 +25,17 @@ const sendEmail = async ({ to, subject, html }) => {
     return;
   }
 
-  await transporter.sendMail({
-    from: process.env.MAIL_FROM || process.env.MAIL_USER,
-    to,
-    subject,
-    html,
-  });
+  try {
+    await transporter.sendMail({
+      from: process.env.MAIL_FROM || process.env.MAIL_USER,
+      to,
+      subject,
+      html,
+    });
+  } catch (error) {
+    console.error("Error enviant email:", error.message);
+    return;
+  }
 };
 
 const buildVerificationEmail = ({ nom, verifyUrl }) => {
