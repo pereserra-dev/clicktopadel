@@ -12,6 +12,8 @@ const availabilityRoutes = require("./routes/availability.routes");
 
 const app = express();
 
+app.set("trust proxy", 1);
+
 // Limiter per a rutes d'autenticació, ja que són més sensibles a intents de força bruta
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
