@@ -805,3 +805,9 @@ body:has(.ap-floating-action) .backToTop {
 .backToTop:active {
   transform: scale(0.96);
 }
+
+@media (max-width: 1024px) {
+	footer {
+		display: none;
+	}
+}
