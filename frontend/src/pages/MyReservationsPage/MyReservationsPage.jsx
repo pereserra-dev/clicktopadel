@@ -524,12 +524,15 @@ function MyReservationsPage() {
                   className="my-res__search-input"
                 />
 
-                <input
-                  type="date"
-                  value={selectedDate}
-                  onChange={(e) => setSelectedDate(e.target.value)}
-                  className="my-res__date-filter"
-                />
+                <label className="my-res__date-field">
+                  <span className="my-res__date-label">Filtrar per data</span>
+                  <input
+                    type="date"
+                    value={selectedDate}
+                    onChange={(e) => setSelectedDate(e.target.value)}
+                    className="my-res__date-filter"
+                  />
+                </label>
 
                 {(selectedDate || searchTerm) && (
                   <button
