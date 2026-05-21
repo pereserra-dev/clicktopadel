@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import heroImg from "../../assets/images/padelcourt1.jpg";
-import court2Img from "../../assets/images/padelcourt2.jpg";
-import court3Img from "../../assets/images/padelcourt3.jpg";
-import ballsImg from "../../assets/images/padelballs.webp";
+import court2Img from "../../assets/images/padelcourt3.jpg";
+import court3Img from "../../assets/images/smash.png";
+import ballsImg from "../../assets/images/appmovil.png";
 import "./HomePage.css";
 import padelCourtMockup from "../../assets/images/padelcourt.png";
 
