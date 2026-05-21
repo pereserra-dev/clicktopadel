@@ -1,9 +1,11 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import api from "../../api/axios";
 import { getUserFromToken } from "../../utils/auth";
 import "./Navbar.css";
+
 const logo = "/padelbooklogo.png";
+const MOBILE_NAV_BREAKPOINT = 1024;
 
 function Navbar() {
   const navigate = useNavigate();
@@ -13,12 +15,12 @@ function Navbar() {
   const fallbackUser = getUserFromToken();
 
   const [user, setUser] = useState(fallbackUser);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-  const [isMobileView, setIsMobileView] = useState(() => window.innerWidth <= 920);
+  const [isMobileView, setIsMobileView] = useState(
+    () => window.innerWidth <= MOBILE_NAV_BREAKPOINT,
+  );
 
-  // Funció per obtenir l'usuari actual des del backend
-  const fetchCurrentUser = async ({ silent = false } = {}) => {
+  const fetchCurrentUser = useCallback(async ({ silent = false } = {}) => {
     const currentToken = localStorage.getItem("token");
 
     if (!currentToken) {
@@ -40,14 +42,18 @@ function Navbar() {
       console.error(err);
       setUser(getUserFromToken());
     }
-  };
+  }, []);
 
-  // Obtenir l'usuari actual quan el component es monta i quan canvia la ruta
   useEffect(() => {
-    fetchCurrentUser({ silent: true });
-  }, [location.pathname]);
+    const timeoutId = window.setTimeout(() => {
+      fetchCurrentUser({ silent: true });
+    }, 0);
 
-  // Escoltar esdeveniments personalitzats i canvis d'emmagatzematge per actualitzar l'usuari
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
+  }, [fetchCurrentUser, location.pathname]);
+
   useEffect(() => {
     const handleProfileUpdated = () => {
       fetchCurrentUser({ silent: true });
@@ -64,23 +70,21 @@ function Navbar() {
       window.removeEventListener("profile-updated", handleProfileUpdated);
       window.removeEventListener("storage", handleStorageChange);
     };
-  }, []);
+  }, [fetchCurrentUser]);
 
-  // Tancar menús quan canvia la ruta
   useEffect(() => {
-    setIsMobileMenuOpen(false);
-    setIsUserMenuOpen(false);
+    const timeoutId = window.setTimeout(() => {
+      setIsUserMenuOpen(false);
+    }, 0);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
   }, [location.pathname]);
 
-  // Gestionar canvis de mida de pantalla per mostrar la versió mòbil
   useEffect(() => {
     const handleResize = () => {
-      const mobile = window.innerWidth <= 920;
-      setIsMobileView(mobile);
-
-      if (!mobile) {
-        setIsMobileMenuOpen(false);
-      }
+      setIsMobileView(window.innerWidth <= MOBILE_NAV_BREAKPOINT);
     };
 
     window.addEventListener("resize", handleResize);
@@ -90,7 +94,6 @@ function Navbar() {
     };
   }, []);
 
-  // Tancar el menú d'usuari quan es fa clic fora o es prem Escape
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
@@ -101,7 +104,6 @@ function Navbar() {
     const handleEscape = (event) => {
       if (event.key === "Escape") {
         setIsUserMenuOpen(false);
-        setIsMobileMenuOpen(false);
       }
     };
 
@@ -114,7 +116,6 @@ function Navbar() {
     };
   }, []);
 
-  // Funció per desplaçar-se suaument a la part superior de la pàgina
   const scrollToTopSmooth = () => {
     window.scrollTo({
       top: 0,
@@ -122,19 +123,15 @@ function Navbar() {
     });
   };
 
-  // Gestionar clics a enllaços de navegació per evitar recarregar la pàgina si ja estem a la ruta
   const handleNavClick = (event, path) => {
     if (location.pathname === path) {
       event.preventDefault();
-      setIsMobileMenuOpen(false);
       setIsUserMenuOpen(false);
       scrollToTopSmooth();
     }
   };
 
-  // Gestionar navegació des del menú d'usuari i assegurar-se que es desplaça a la part superior
   const handleNavigateWithTop = (path) => {
-    setIsMobileMenuOpen(false);
     setIsUserMenuOpen(false);
 
     if (location.pathname === path) {
@@ -145,50 +142,25 @@ function Navbar() {
     navigate(path);
   };
 
-  // Gestionar tancament de sessió eliminant dades d'autenticació i redirigint a la pàgina de login
   const handleUserMenuToggle = () => {
-    if (isUserMenuOpen) {
-      setIsUserMenuOpen(false);
-      return;
-    }
-
-    setIsMobileMenuOpen(false);
-    setIsUserMenuOpen(true);
-  };
-
-  const handleMobileMenuToggle = () => {
-    if (isMobileMenuOpen) {
-      setIsMobileMenuOpen(false);
-      return;
-    }
-
-    setIsUserMenuOpen(false);
-    setIsMobileMenuOpen(true);
+    setIsUserMenuOpen((isOpen) => !isOpen);
   };
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     setUser(null);
-    setIsMobileMenuOpen(false);
     setIsUserMenuOpen(false);
     navigate("/login");
   };
 
-  // Comprovar si una ruta és activa per aplicar estils d'enllaç actiu
   const isActive = (path) => location.pathname === path;
-  const isLoginPage = location.pathname === "/login";
-  const isRegisterPage = location.pathname === "/register";
-  const isAuthPage = isLoginPage || isRegisterPage;
-  const shouldShowMobileNavigation = isMobileView;
 
-  // Funcions auxiliars per obtenir el nom d'usuari i les inicials per l'avatar
   const getDisplayName = (nom) => {
     if (!nom) return "Usuari";
     return nom.trim().split(" ")[0];
   };
 
-  // Funció per obtenir les inicials a partir de nom + llinatges
   const getInitials = (nom, llinatges) => {
     const cleanNom = typeof nom === "string" ? nom.trim() : "";
     const cleanLlinatges = typeof llinatges === "string" ? llinatges.trim() : "";
@@ -200,20 +172,13 @@ function Navbar() {
   };
 
   const fullUserName = [user?.nom, user?.llinatges].filter(Boolean).join(" ").trim();
-
-  // Obtenir el nom d'usuari per mostrar al menú d'usuari i les inicials per l'avatar
   const userName = getDisplayName(user?.nom);
   const userEmail = user?.email || "";
   const userRole = (user?.rol || "").toLowerCase();
   const canAccessAdminPanel = userRole === "admin" || userRole === "gestor";
   const userRoleLabel =
-    userRole === "admin"
-      ? "Administrador"
-      : userRole === "gestor"
-      ? "Gestor"
-      : "Usuari";
+    userRole === "admin" ? "Administrador" : userRole === "gestor" ? "Gestor" : "Usuari";
 
-  // Definir els enllaços de navegació basats en l'estat d'autenticació i el rol de l'usuari
   const navLinks = useMemo(() => {
     const links = [
       { to: "/", label: "Inici" },
@@ -230,11 +195,6 @@ function Navbar() {
 
     return links;
   }, [canAccessAdminPanel, user]);
-
-  const mobileNavLinks = isAuthPage
-    ? navLinks.filter((link) => link.to === "/" || link.to === "/availability")
-    : navLinks;
-  const shouldShowGuestMobileActions = !user || isAuthPage;
 
   return (
     <nav className="pb-navbar">
@@ -291,11 +251,7 @@ function Navbar() {
 
                 {!isMobileView && (
                   <span className="pb-navbar__chevron" aria-hidden="true">
-                    <svg
-                      viewBox="0 0 20 20"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
+                    <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path
                         d="M5 7.5L10 12.5L15 7.5"
                         stroke="currentColor"
@@ -311,13 +267,9 @@ function Navbar() {
               {isUserMenuOpen && (
                 <div className="pb-navbar__dropdown" role="menu">
                   <div className="pb-navbar__dropdown-head">
-                    <span className="pb-navbar__dropdown-name">
-                      {fullUserName || "Usuari"}
-                    </span>
+                    <span className="pb-navbar__dropdown-name">{fullUserName || "Usuari"}</span>
                     <span className="pb-navbar__dropdown-role">{userRoleLabel}</span>
-                    {userEmail && (
-                      <span className="pb-navbar__dropdown-email">{userEmail}</span>
-                    )}
+                    {userEmail && <span className="pb-navbar__dropdown-email">{userEmail}</span>}
                   </div>
 
                   <div className="pb-navbar__dropdown-body">
@@ -327,11 +279,7 @@ function Navbar() {
                       onClick={() => handleNavigateWithTop("/my-account")}
                     >
                       <span className="pb-navbar__dropdown-icon" aria-hidden="true">
-                        <svg
-                          viewBox="0 0 20 20"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
+                        <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <path
                             d="M10 10C12.2091 10 14 8.20914 14 6C14 3.79086 12.2091 2 10 2C7.79086 2 6 3.79086 6 6C6 8.20914 7.79086 10 10 10Z"
                             stroke="currentColor"
@@ -355,11 +303,7 @@ function Navbar() {
                         onClick={() => handleNavigateWithTop("/admin")}
                       >
                         <span className="pb-navbar__dropdown-icon" aria-hidden="true">
-                          <svg
-                            viewBox="0 0 20 20"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
+                          <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path
                               d="M10 2L12.25 4.25L15.5 4.5L15.75 7.75L18 10L15.75 12.25L15.5 15.5L12.25 15.75L10 18L7.75 15.75L4.5 15.5L4.25 12.25L2 10L4.25 7.75L4.5 4.5L7.75 4.25L10 2Z"
                               stroke="currentColor"
@@ -383,11 +327,7 @@ function Navbar() {
                       onClick={handleLogout}
                     >
                       <span className="pb-navbar__dropdown-icon" aria-hidden="true">
-                        <svg
-                          viewBox="0 0 20 20"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
+                        <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <path
                             d="M8 4H5.75C5.05964 4 4.5 4.55964 4.5 5.25V14.75C4.5 15.4404 5.05964 16 5.75 16H8"
                             stroke="currentColor"
@@ -416,7 +356,7 @@ function Navbar() {
               )}
             </div>
           ) : (
-            !isMobileView && (
+            !isMobileView ? (
               <div className="pb-navbar__guest-actions">
                 <Link
                   to="/login"
@@ -433,69 +373,21 @@ function Navbar() {
                   Crear compte
                 </Link>
               </div>
+            ) : (
+              <Link
+                to="/my-account"
+                className="pb-navbar__user-trigger pb-navbar__user-trigger--guest-mobile"
+                aria-label="Anar al perfil"
+                onClick={(event) => handleNavClick(event, "/my-account")}
+              >
+                <span className="pb-navbar__avatar" aria-hidden="true">
+                  U
+                </span>
+              </Link>
             )
-          )}
-
-          {shouldShowMobileNavigation && (
-            <button
-              type="button"
-              className={`pb-navbar__mobile-toggle ${isMobileMenuOpen ? "is-open" : ""}`}
-              onClick={handleMobileMenuToggle}
-              aria-label={isMobileMenuOpen ? "Tancar menú" : "Obrir menú"}
-              aria-expanded={isMobileMenuOpen}
-            >
-              <span className="pb-navbar__mobile-toggle-line" />
-              <span className="pb-navbar__mobile-toggle-line" />
-              <span className="pb-navbar__mobile-toggle-line" />
-            </button>
           )}
         </div>
       </div>
-
-      {shouldShowMobileNavigation && (
-        <div
-          className={`pb-navbar__mobile-panel ${isMobileMenuOpen ? "is-open" : ""}`}
-        >
-          <div className="pb-navbar__mobile-links">
-            {mobileNavLinks.map((link) => (
-              <Link
-                key={link.to}
-                to={link.to}
-                className={`pb-navbar__mobile-link ${isActive(link.to) ? "is-active" : ""}`}
-                onClick={() => {
-                  setIsMobileMenuOpen(false);
-                  setIsUserMenuOpen(false);
-                }}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
-
-          {shouldShowGuestMobileActions && (
-            <div className="pb-navbar__mobile-actions">
-              {!isLoginPage && (
-                <Link
-                  to="/login"
-                  className="btn btn-light btn-full"
-                  onClick={(event) => handleNavClick(event, "/login")}
-                >
-                  Iniciar sessió
-                </Link>
-              )}
-              {!isRegisterPage && (
-                <Link
-                  to="/register"
-                  className="btn btn-primary btn-full"
-                  onClick={(event) => handleNavClick(event, "/register")}
-                >
-                  Crear compte
-                </Link>
-              )}
-            </div>
-          )}
-        </div>
-      )}
     </nav>
   );
 }

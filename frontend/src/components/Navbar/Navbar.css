@@ -593,7 +593,7 @@
   border-color: rgba(148, 163, 184, 0.22);
 }
 
-@media (max-width: 920px) {
+@media (max-width: 1024px) {
   .pb-navbar__inner {
     grid-template-columns: 1fr auto;
     min-height: 68px;
@@ -618,6 +618,11 @@
 
   .pb-navbar__chevron {
     display: none;
+  }
+
+  .pb-navbar__user-trigger--guest-mobile {
+    padding-right: 0.38rem;
+    padding-left: 0.38rem;
   }
 }
 

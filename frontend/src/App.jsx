@@ -20,6 +20,7 @@ import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import VerifyEmailPage from "./pages/VerifyEmailPage/VerifyEmailPage";
 import BackToTopButton from "./components/BackToTopButton/BackToTopButton";
 import Footer from "./components/Footer/Footer";
+import BottomNavigation from "./components/BottomNavigation";
 
 function AppContent() {
   const navigate = useNavigate();
@@ -47,7 +48,7 @@ function AppContent() {
       <ScrollToTop />
       <Navbar />
 
-      <main>
+      <main className="pb-app-main">
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
@@ -87,6 +88,7 @@ function AppContent() {
       <Footer />
 
       <BackToTopButton />
+      <BottomNavigation />
     </>
   );
 }
