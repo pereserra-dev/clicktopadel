@@ -1313,6 +1313,98 @@ function AdminPage() {
     });
   };
 
+  const parseAdminDateValue = (value) => {
+    if (!value) return null;
+
+    if (value instanceof Date) {
+      return value;
+    }
+
+    const rawValue = String(value).trim();
+    const normalizedValue = rawValue.replace(/\s*\([^)]*\)\s*$/, "");
+
+    if (/^\d{4}-\d{2}-\d{2}$/.test(normalizedValue)) {
+      return new Date(`${normalizedValue}T00:00:00`);
+    }
+
+    return new Date(normalizedValue);
+  };
+
+  const formatAdminDate = (value) => {
+    if (!value) return "";
+
+    const parsed = parseAdminDateValue(value);
+    if (!parsed || Number.isNaN(parsed.getTime())) return String(value);
+
+    return new Intl.DateTimeFormat("ca-ES", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    }).format(parsed);
+  };
+
+  const formatAdminTime = (value) => {
+    if (!value) return "";
+
+    const rawValue = String(value).trim();
+    const timeMatch = rawValue.match(/^(\d{1,2}):(\d{2})(?::\d{2})?$/);
+
+    if (timeMatch) {
+      return `${timeMatch[1].padStart(2, "0")}:${timeMatch[2]}`;
+    }
+
+    const parsed = parseAdminDateValue(value);
+    if (!parsed || Number.isNaN(parsed.getTime())) return rawValue;
+
+    return new Intl.DateTimeFormat("ca-ES", {
+      hour: "2-digit",
+      minute: "2-digit",
+      hourCycle: "h23",
+    }).format(parsed);
+  };
+
+  const formatAdminLogDateTime = (value) => {
+    if (!value) return "Data no disponible";
+
+    const parsed = parseAdminDateValue(value);
+    if (!parsed || Number.isNaN(parsed.getTime())) return String(value);
+
+    return `${formatAdminDate(parsed)} · ${formatAdminTime(parsed)}`;
+  };
+
+  const formatAdminLogDateFragment = (value) => {
+    const parsed = parseAdminDateValue(value);
+    if (!parsed || Number.isNaN(parsed.getTime())) return String(value);
+
+    const hasVisibleTime = parsed.getHours() !== 0 || parsed.getMinutes() !== 0;
+
+    return hasVisibleTime
+      ? `${formatAdminDate(parsed)} · ${formatAdminTime(parsed)}`
+      : formatAdminDate(parsed);
+  };
+
+  const formatAdminLogDetails = (value) => {
+    if (!value) return "";
+
+    const jsDatePattern =
+      /\b(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun)\s+[A-Z][a-z]{2}\s+\d{1,2}\s+\d{4}\s+\d{2}:\d{2}:\d{2}\s+GMT[+-]\d{4}(?:\s+\([^)]*\))?/g;
+    const isoDateTimePattern =
+      /\b\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2}(?:\.\d{3})?)?(?:Z|[+-]\d{2}:?\d{2})?\b/g;
+    const dateRangePattern =
+      /\b(\d{2}\/\d{2}\/\d{4}|\d{4}-\d{2}-\d{2})\s+de\s+(\d{1,2}:\d{2})(?::\d{2})?\s+a\s+(\d{1,2}:\d{2})(?::\d{2})?/g;
+    const isoDatePattern = /\b(\d{4}-\d{2}-\d{2})\b/g;
+
+    return String(value)
+      .replace(jsDatePattern, (match) => formatAdminLogDateFragment(match))
+      .replace(isoDateTimePattern, (match) => formatAdminLogDateFragment(match))
+      .replace(
+        dateRangePattern,
+        (_match, date, startTime, endTime) =>
+          `${formatAdminDate(date)} · ${formatAdminTime(startTime)} - ${formatAdminTime(endTime)}`
+      )
+      .replace(isoDatePattern, (match) => formatAdminDate(match));
+  };
+
   const formatDateOnly = (value) => {
     if (!value) return "Data no disponible";
 
@@ -2202,7 +2294,7 @@ function AdminPage() {
                                   </span>
 
                                   <span className="admin__log-date">
-                                    {formatDateTime(log.createdAt)}
+                                    {formatAdminLogDateTime(log.createdAt)}
                                   </span>
                                 </div>
 
@@ -2225,7 +2317,7 @@ function AdminPage() {
                                 </p>
 
                                 <p className="admin__log-details">
-                                  {log.details || "Sense detalls addicionals."}
+                                  {formatAdminLogDetails(log.details) || "Sense detalls addicionals."}
                                 </p>
 
                                 {(log.entity === "court" || (canManageUsers && log.entity === "user") || log.entity === "maintenance_block") && (

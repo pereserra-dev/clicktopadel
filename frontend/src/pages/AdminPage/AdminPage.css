@@ -105,13 +105,15 @@
 .admin__hero-tabs {
   display: inline-flex;
   align-items: center;
+  justify-content: flex-start;
   gap: 0.4rem;
   flex-wrap: nowrap;
+  align-self: flex-start;
   margin-top: 1.15rem;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 0.3rem;
-  border-radius: 18px;
+  margin-left: 0;
+  margin-right: 0;
+  padding: 0.28rem;
+  border-radius: 16px;
   background: linear-gradient(135deg, rgba(8, 15, 32, 0.34), rgba(30, 41, 59, 0.22));
   border: 1px solid rgba(255, 255, 255, 0.14);
   box-shadow:
@@ -119,7 +121,7 @@
     0 14px 28px rgba(15, 23, 42, 0.14);
   backdrop-filter: blur(14px);
   width: fit-content;
-  max-width: 100%;
+  max-width: min(100%, 40rem);
 }
 
 .admin__hero-tabs--mobile {
@@ -131,10 +133,11 @@
 
 .admin__hero-tab {
   position: relative;
-  min-height: 46px;
-  padding: 0.72rem 1rem;
+  flex: 0 0 auto;
+  min-height: 42px;
+  padding: 0.66rem 0.9rem;
   border: 1px solid transparent;
-  border-radius: 14px;
+  border-radius: 12px;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
   color: rgba(255, 255, 255, 0.82);
   font: inherit;
@@ -1133,7 +1136,10 @@
   }
 
   .admin__hero-tabs {
-    width: 100%;
+    width: fit-content;
+    max-width: 100%;
+    flex-wrap: wrap;
+    justify-content: flex-start;
   }
 }
 
