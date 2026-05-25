@@ -347,10 +347,11 @@ function RegisterPage() {
   };
 
   return (
-    <div className="register__page">
+    <div className={`register__page ${isMobileView ? "register__page--mobile" : ""}`}>
       <div
         className={`register__wrapper ${isMobileView ? "register__wrapper--mobile" : ""}`}
       >
+        {!isMobileView && (
         <section
           className={`fade-in-up register__visual-panel ${
             isMobileView ? "register__visual-panel--mobile" : ""
@@ -406,6 +407,7 @@ function RegisterPage() {
             </div>
           </div>
         </section>
+        )}
 
         <section
           className={`scale-in delay-1 register__form-card ${
@@ -413,11 +415,26 @@ function RegisterPage() {
           }`}
         >
           <div className="register__form-top">
-            <span className="register__form-kicker">Registre</span>
-            <h2 className="register__form-title">Crear compte</h2>
-            <p className="register__form-text">
-              Omple el formulari i comença a utilitzar la plataforma.
-            </p>
+            {isMobileView ? (
+              <>
+                <h2 className="register__form-title">
+                  Uneix-te a{" "}
+                  <span className="register__mobile-brand">PadelBook</span>
+                </h2>
+                <span className="register__mobile-title-line" aria-hidden="true" />
+                <p className="register__form-text">
+                  Crea el teu compte i comença a reservar.
+                </p>
+              </>
+            ) : (
+              <>
+                <span className="register__form-kicker">Registre</span>
+                <h2 className="register__form-title">Crear compte</h2>
+                <p className="register__form-text">
+                  Omple el formulari i comença a utilitzar la plataforma.
+                </p>
+              </>
+            )}
           </div>
 
           <div ref={feedbackRef} />

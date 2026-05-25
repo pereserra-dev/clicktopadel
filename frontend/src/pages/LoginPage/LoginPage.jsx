@@ -359,10 +359,11 @@ function LoginPage() {
   };
 
   return (
-    <div className="login__page">
+    <div className={`login__page ${isMobileView ? "login__page--mobile" : ""}`}>
       <div
         className={`login__wrapper ${isMobileView ? "login__wrapper--mobile" : ""}`}
       >
+        {!isMobileView && (
         <section
           className={`fade-in-up login__visual-panel ${
             isMobileView ? "login__visual-panel--mobile" : ""
@@ -418,6 +419,7 @@ function LoginPage() {
             </div>
           </div>
         </section>
+        )}
 
         <section
           className={`scale-in delay-1 login__form-card ${
@@ -425,11 +427,26 @@ function LoginPage() {
           }`}
         >
           <div className="login__form-top">
-            <span className="login__form-kicker">Iniciar sessió</span>
-            <h2 className="login__form-title">Benvingut de nou</h2>
-            <p className="login__form-text">
-              Introdueix les teves credencials per accedir al teu compte.
-            </p>
+            {isMobileView ? (
+              <>
+                <h2 className="login__form-title">
+                  Benvingut a{" "}
+                  <span className="login__mobile-brand">PadelBook</span>
+                </h2>
+                <span className="login__mobile-title-line" aria-hidden="true" />
+                <p className="login__form-text">
+                  Inicia sessió amb el teu compte i continua reservant pistes.
+                </p>
+              </>
+            ) : (
+              <>
+                <span className="login__form-kicker">Iniciar sessió</span>
+                <h2 className="login__form-title">Benvingut de nou</h2>
+                <p className="login__form-text">
+                  Introdueix les teves credencials per accedir al teu compte.
+                </p>
+              </>
+            )}
           </div>
 
           <div ref={feedbackRef} />

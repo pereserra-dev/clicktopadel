@@ -1,4 +1,6 @@
+import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { getUserFromToken } from "../utils/auth";
 import "./BottomNavigation.css";
 
 const navItems = [
@@ -42,6 +44,7 @@ const navItems = [
   {
     to: "/my-reservations",
     label: "Reserves",
+    requiresAuth: true,
     match: (pathname) => pathname.startsWith("/my-reservations"),
     icon: (
       <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -79,6 +82,26 @@ const navItems = [
 
 function BottomNavigation() {
   const location = useLocation();
+  const [, setAuthVersion] = useState(0);
+
+  useEffect(() => {
+    const refreshUser = () => {
+      setAuthVersion((version) => version + 1);
+    };
+
+    window.addEventListener("profile-updated", refreshUser);
+    window.addEventListener("session-expired", refreshUser);
+    window.addEventListener("storage", refreshUser);
+
+    return () => {
+      window.removeEventListener("profile-updated", refreshUser);
+      window.removeEventListener("session-expired", refreshUser);
+      window.removeEventListener("storage", refreshUser);
+    };
+  }, []);
+
+  const user = getUserFromToken();
+  const visibleNavItems = navItems.filter((item) => !item.requiresAuth || user);
 
   const handleNavClick = (event, path) => {
     if (location.pathname === path) {
@@ -89,8 +112,11 @@ function BottomNavigation() {
 
   return (
     <nav className="pb-bottom-nav" aria-label="Navegació principal mòbil">
-      <div className="pb-bottom-nav__inner">
-        {navItems.map((item) => {
+      <div
+        className="pb-bottom-nav__inner"
+        style={{ "--bottom-nav-items": visibleNavItems.length }}
+      >
+        {visibleNavItems.map((item) => {
           const isActive = item.match(location.pathname);
 
           return (

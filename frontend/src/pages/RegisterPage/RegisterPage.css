@@ -152,6 +152,16 @@
   border-radius: 24px;
 }
 
+.register__page--mobile {
+  min-height: auto;
+  align-items: flex-start;
+  padding: 0.75rem 0.75rem 1.35rem;
+}
+
+.register__form-card--mobile .register__form-kicker {
+  display: none;
+}
+
 .register__form-top {
   margin-bottom: 1.2rem;
 }
@@ -177,6 +187,47 @@
   margin-top: 0.55rem;
   margin-bottom: 0;
   color: #64748b;
+}
+
+.register__form-card--mobile .register__form-top {
+  text-align: center;
+  margin-bottom: 0.9rem;
+}
+
+.register__form-card--mobile .register__form-title {
+  font-size: 1.68rem;
+  font-weight: 950;
+  line-height: 1.04;
+  letter-spacing: 0;
+  text-wrap: balance;
+  text-shadow: 0 8px 22px rgba(37, 99, 235, 0.1);
+}
+
+.register__mobile-brand {
+  display: inline-block;
+  background: linear-gradient(92deg, #2563eb 8%, #14b8a6 92%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 5px 12px rgba(20, 184, 166, 0.14));
+}
+
+.register__mobile-title-line {
+  display: block;
+  width: 64px;
+  height: 3px;
+  margin: 0.5rem auto 0.7rem;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #2563eb, #14b8a6);
+}
+
+.register__form-card--mobile .register__form-text {
+  max-width: 19rem;
+  margin: 0 auto;
+  color: #5f6f83;
+  font-size: 0.9rem;
+  line-height: 1.54;
 }
 
 .register__error-box {
@@ -564,6 +615,10 @@
     margin-bottom: 0.75rem;
   }
 
+  .register__form-card--mobile .register__form-top {
+    margin-bottom: 0.72rem;
+  }
+
   .register__form-kicker {
     margin-bottom: 0.45rem;
     padding: 0.28rem 0.58rem;
@@ -574,10 +629,26 @@
     font-size: 1.5rem;
   }
 
+  .register__form-card--mobile .register__form-title {
+    font-size: 1.58rem;
+  }
+
+  .register__mobile-title-line {
+    width: 60px;
+    height: 3px;
+    margin: 0.46rem auto 0.58rem;
+  }
+
   .register__form-text {
     margin-top: 0.3rem;
     font-size: 0.9rem;
     line-height: 1.4;
+  }
+
+  .register__form-card--mobile .register__form-text {
+    margin: 0 auto;
+    font-size: 0.86rem;
+    line-height: 1.5;
   }
 
   .register__error-box {
