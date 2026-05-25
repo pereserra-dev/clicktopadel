@@ -2002,81 +2002,6 @@ function AdminPage() {
                       )}
                     </div>
 
-                    <div className="pb-surface-card admin__section-card admin__dashboard-card admin__dashboard-card--timeslots">
-                      <div
-                        className={`admin__analytics-header ${
-                          isMobileView ? "admin__analytics-header--mobile" : ""
-                        }`}
-                      >
-                        <div>
-                          <span className="pb-kicker">Demanda</span>
-                          <h3 className="admin__analytics-title">
-                            Franges més reservades
-                          </h3>
-                        </div>
-                        <span className="pb-badge-pill pb-badge-pill--green">
-                          {activeTimeslotStats.length} amb activitat
-                        </span>
-                      </div>
-
-                      {activeTimeslotStats.length > 0 ? (
-                        <>
-                          <div className="admin__metric-list">
-                            {visibleTimeslotStats.map((item) => {
-                              const width =
-                                topTimeslotValue > 0
-                                  ? `${(item.value / topTimeslotValue) * 100}%`
-                                  : "0%";
-
-                              return (
-                                <div key={item.id} className="admin__metric-item">
-                                  <div
-                                    className={`admin__metric-top-row ${
-                                      isMobileView ? "admin__metric-top-row--mobile" : ""
-                                    }`}
-                                  >
-                                    <span className="admin__metric-label">{item.label}</span>
-                                    <span className="admin__metric-value">{item.value}</span>
-                                  </div>
-
-                                  <div className="admin__metric-bar-track">
-                                    <div
-                                      className="admin__metric-bar-fill--secondary"
-                                      style={{ width }}
-                                    />
-                                  </div>
-                                </div>
-                              );
-                            })}
-                          </div>
-
-                          {activeTimeslotStats.length > 5 && (
-                            <div className="admin__metrics-toggle">
-                              <button
-                                type="button"
-                                className="btn btn-light btn-sm"
-                                onClick={() => setShowAllTimeslotStats((prev) => !prev)}
-                              >
-                                {showAllTimeslotStats ? "Mostrar menys" : "Veure més franges"}
-                              </button>
-                            </div>
-                          )}
-                        </>
-                      ) : (
-                        <p className="admin__empty-analytics-text">
-                          Encara no hi ha franges amb reserves registrades.
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                </section>
-
-                <section className="fade-in-up delay-3 admin__section admin__section--dashboard-bottom">
-                  <div
-                    className={`admin__analytics-grid admin__analytics-grid--dashboard-bottom ${
-                      isMobileView ? "admin__analytics-grid--mobile" : ""
-                    }`}
-                  >
                     <div
                       className={`pb-surface-card admin__section-card admin__dashboard-card admin__dashboard-card--dates ${
                         activeDateStats.length <= 3
@@ -2171,6 +2096,81 @@ function AdminPage() {
                       )}
                     </div>
 
+                    <div className="pb-surface-card admin__section-card admin__dashboard-card admin__dashboard-card--timeslots">
+                      <div
+                        className={`admin__analytics-header ${
+                          isMobileView ? "admin__analytics-header--mobile" : ""
+                        }`}
+                      >
+                        <div>
+                          <span className="pb-kicker">Demanda</span>
+                          <h3 className="admin__analytics-title">
+                            Franges més reservades
+                          </h3>
+                        </div>
+                        <span className="pb-badge-pill pb-badge-pill--green">
+                          {activeTimeslotStats.length} amb activitat
+                        </span>
+                      </div>
+
+                      {activeTimeslotStats.length > 0 ? (
+                        <>
+                          <div className="admin__metric-list">
+                            {visibleTimeslotStats.map((item) => {
+                              const width =
+                                topTimeslotValue > 0
+                                  ? `${(item.value / topTimeslotValue) * 100}%`
+                                  : "0%";
+
+                              return (
+                                <div key={item.id} className="admin__metric-item">
+                                  <div
+                                    className={`admin__metric-top-row ${
+                                      isMobileView ? "admin__metric-top-row--mobile" : ""
+                                    }`}
+                                  >
+                                    <span className="admin__metric-label">{item.label}</span>
+                                    <span className="admin__metric-value">{item.value}</span>
+                                  </div>
+
+                                  <div className="admin__metric-bar-track">
+                                    <div
+                                      className="admin__metric-bar-fill--secondary"
+                                      style={{ width }}
+                                    />
+                                  </div>
+                                </div>
+                              );
+                            })}
+                          </div>
+
+                          {activeTimeslotStats.length > 5 && (
+                            <div className="admin__metrics-toggle">
+                              <button
+                                type="button"
+                                className="btn btn-light btn-sm"
+                                onClick={() => setShowAllTimeslotStats((prev) => !prev)}
+                              >
+                                {showAllTimeslotStats ? "Mostrar menys" : "Veure més franges"}
+                              </button>
+                            </div>
+                          )}
+                        </>
+                      ) : (
+                        <p className="admin__empty-analytics-text">
+                          Encara no hi ha franges amb reserves registrades.
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </section>
+
+                <section className="fade-in-up delay-3 admin__section admin__section--dashboard-bottom">
+                  <div
+                    className={`admin__analytics-grid admin__analytics-grid--dashboard-bottom ${
+                      isMobileView ? "admin__analytics-grid--mobile" : ""
+                    }`}
+                  >
                     <div className="pb-surface-card admin__section-card admin__dashboard-card admin__dashboard-card--logs">
                       <div
                         className={`admin__analytics-header ${
