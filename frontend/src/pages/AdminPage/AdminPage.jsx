@@ -94,7 +94,7 @@ function AdminPage() {
     : isGestorRole
     ? {
         label: "Vista de gestor",
-        text: "Pots gestionar reserves, pistes, manteniment, estadístiques i logs del club. La gestió d'usuaris i rols queda reservada a l'administrador principal.",
+        text: "Pots gestionar reserves, pistes, manteniment, estadístiques i logs del club amb accés operatiu complet.",
       }
     : null;
   const roleChangeOptions = ["usuari", "gestor", "admin"];
@@ -1682,7 +1682,11 @@ function AdminPage() {
               <div className="admin__hero-panel">
                 <span className="admin__hero-panel-label">Resum executiu</span>
 
-                <div className="admin__hero-panel-grid">
+                <div
+                  className={`admin__hero-panel-grid ${
+                    isGestorRole ? "admin__hero-panel-grid--gestor" : ""
+                  }`}
+                >
                   <div className="admin__hero-panel-card">
                     <span className="admin__hero-panel-card-label">
                       Pistes totals
