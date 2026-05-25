@@ -1682,11 +1682,7 @@ function AdminPage() {
               <div className="admin__hero-panel">
                 <span className="admin__hero-panel-label">Resum executiu</span>
 
-                <div
-                  className={`admin__hero-panel-grid ${
-                    isGestorRole ? "admin__hero-panel-grid--gestor" : ""
-                  }`}
-                >
+                <div className="admin__hero-panel-grid">
                   <div className="admin__hero-panel-card">
                     <span className="admin__hero-panel-card-label">
                       Pistes totals
@@ -1730,6 +1726,17 @@ function AdminPage() {
                       </span>
                       <span className="admin__hero-panel-card-value">
                         {users.length}
+                      </span>
+                    </div>
+                  )}
+
+                  {isGestorRole && (
+                    <div className="admin__hero-panel-card">
+                      <span className="admin__hero-panel-card-label">
+                        Ocupació
+                      </span>
+                      <span className="admin__hero-panel-card-value">
+                        {occupancyRate}%
                       </span>
                     </div>
                   )}
