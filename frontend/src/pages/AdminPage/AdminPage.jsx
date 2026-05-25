@@ -86,6 +86,17 @@ function AdminPage() {
   const currentUserRole = (storedUser?.rol || "").trim().toLowerCase();
   const canManageUsers = currentUserRole === "admin";
   const isGestorRole = currentUserRole === "gestor";
+  const adminHeroRoleNotice = canManageUsers
+    ? {
+        label: "Vista d’administrador",
+        text: "Pots gestionar reserves, pistes, manteniment, estadístiques, logs, usuaris i rols del club amb accés complet al sistema.",
+      }
+    : isGestorRole
+    ? {
+        label: "Vista de gestor",
+        text: "Pots gestionar reserves, pistes, manteniment, estadístiques i logs del club. La gestió d'usuaris i rols queda reservada a l'administrador principal.",
+      }
+    : null;
   const roleChangeOptions = ["usuari", "gestor", "admin"];
 
   const getAdminRoleLabel = (role) => {
@@ -1606,14 +1617,12 @@ function AdminPage() {
                 d’un espai més complet, més ordenat i amb millor lectura visual.
               </p>
 
-              {isGestorRole && (
+              {adminHeroRoleNotice && (
                 <div className="admin__role-notice admin__role-notice--gestor">
-                  <span className="admin__role-notice-label">Vista de gestor</span>
-                  <p className="admin__role-notice-text">
-                    Pots gestionar reserves, pistes, manteniment, estadístiques i logs
-                    del club. La gestió d'usuaris i rols queda reservada a
-                    l'administrador principal.
-                  </p>
+                  <span className="admin__role-notice-label">
+                    {adminHeroRoleNotice.label}
+                  </span>
+                  <p className="admin__role-notice-text">{adminHeroRoleNotice.text}</p>
                 </div>
               )}
 
