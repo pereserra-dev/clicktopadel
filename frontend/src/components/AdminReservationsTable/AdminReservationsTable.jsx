@@ -318,11 +318,6 @@ function formatTime(time) {
 
           <div className="admin-res__expandable-grid">
             <div className="admin-res__expandable-item">
-              <span className="admin-res__expandable-label">ID reserva</span>
-              <span className="admin-res__expandable-value">{r.id}</span>
-            </div>
-
-            <div className="admin-res__expandable-item">
               <span className="admin-res__expandable-label">Usuari</span>
               <span className="admin-res__expandable-value">
                 {r.usuari_nom || "-"}
@@ -372,24 +367,9 @@ function formatTime(time) {
             </div>
 
             <div className="admin-res__expandable-item">
-              <span className="admin-res__expandable-label">ID usuari</span>
-              <span className="admin-res__expandable-value">{r.user_id || "-"}</span>
-            </div>
-
-            <div className="admin-res__expandable-item">
-              <span className="admin-res__expandable-label">ID pista</span>
-              <span className="admin-res__expandable-value">{r.court_id || "-"}</span>
-            </div>
-
-            <div className="admin-res__expandable-item">
-              <span className="admin-res__expandable-label">ID franja</span>
-              <span className="admin-res__expandable-value">
-                {r.time_slot_id || "-"}
+              <span className="admin-res__expandable-label">
+                Data de creació
               </span>
-            </div>
-
-            <div className="admin-res__expandable-item">
-              <span className="admin-res__expandable-label">Creat</span>
               <span className="admin-res__expandable-value">
                 {r.created_at
                   ? new Date(r.created_at).toLocaleString("ca-ES")
