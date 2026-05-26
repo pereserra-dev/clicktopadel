@@ -677,13 +677,13 @@
   --ap-duration-column: 136px;
   --ap-payment-column: 300px;
   position: fixed;
-  bottom: var(--ap-booking-panel-bottom-gap);
+  bottom: 0;
   left: 0;
   right: 0;
   min-height: calc(var(--ap-bar-height) + env(safe-area-inset-bottom, 0px));
   max-height: calc(100dvh - 2rem);
   overflow: visible;
-  background: rgba(255, 255, 255, 0.95);
+  background: #ffffff;
   backdrop-filter: blur(16px);
   border-top: 1px solid rgba(226, 232, 240, 0.9);
   box-shadow: 0 -14px 40px rgba(15, 23, 42, 0.08);
@@ -693,7 +693,7 @@
 }
 
 .ap-floating-action--disabled {
-  background: rgba(248, 250, 252, 0.97);
+  background: #f8fafc;
   border-top-color: rgba(203, 213, 225, 0.95);
   box-shadow: 0 -12px 34px rgba(15, 23, 42, 0.06);
 }
