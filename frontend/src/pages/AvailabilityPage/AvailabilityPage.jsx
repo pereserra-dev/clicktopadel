@@ -791,16 +791,17 @@ function AvailabilityPage() {
   const selectedReservationEndTime = selectedSlot
     ? getReservationEndTime(selectedSlot, selectedDuration, selectedCourtSlots)
     : "";
+  const isBookingPanelOpen = selectedSlot && !success;
 
   return (
     <div
       className={`ap-wrapper ${
-        selectedSlot && !success ? "has-bottom-bar" : ""
+        isBookingPanelOpen ? "has-bottom-bar has-booking-panel" : ""
       }`}
     >
       <div
         className={`ap-container ${
-          selectedSlot && !success ? "ap-container--with-bottom-bar" : ""
+          isBookingPanelOpen ? "ap-container--with-bottom-bar" : ""
         }`}
       >
         <header className="fade-in-up ap-hero-card">
@@ -1247,7 +1248,7 @@ function AvailabilityPage() {
         )}
       </div>
 
-      {selectedSlot && !success && (
+      {isBookingPanelOpen && (
         <div
           className={`ap-floating-action slide-up ${
             selectedSlotCanReserve ? "" : "ap-floating-action--disabled"

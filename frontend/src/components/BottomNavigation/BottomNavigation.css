@@ -12,6 +12,16 @@
     display: block;
     width: min(560px, calc(100% - 1.25rem));
     transform: translateX(-50%);
+    opacity: 1;
+    pointer-events: none;
+    transition:
+      opacity 0.26s ease,
+      transform 0.26s ease;
+  }
+
+  body:has(.ap-wrapper.has-booking-panel) .pb-bottom-nav {
+    opacity: 0;
+    transform: translate(-50%, 120%);
     pointer-events: none;
   }
 
@@ -139,6 +149,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .pb-bottom-nav,
   .pb-bottom-nav__item {
     transition: none;
   }
