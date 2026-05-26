@@ -1,6 +1,6 @@
 .ap-wrapper {
   --ap-bottom-bar-height: 184px;
-  --ap-booking-panel-bottom-gap: 1.35rem;
+  --ap-booking-panel-bottom-gap: 1.75rem;
   background:
     radial-gradient(circle at 14% 0%, rgba(20, 184, 166, 0.12), transparent 25rem),
     radial-gradient(circle at 88% 0%, rgba(37, 99, 235, 0.14), transparent 26rem),
@@ -643,8 +643,10 @@
 }
 
 .ap-floating-close {
-  position: relative;
-  top: 40px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
   width: 34px;
   height: 34px;
   border: none;
@@ -669,23 +671,23 @@
 
 .ap-floating-action {
   --ap-bar-height: var(--ap-bottom-bar-height);
-  --ap-summary-column: minmax(300px, 1fr);
+  --ap-summary-column: minmax(320px, 1fr);
+  --ap-controls-column: minmax(360px, auto);
+  --ap-confirm-column: minmax(220px, auto);
   --ap-duration-column: 136px;
   --ap-payment-column: 300px;
-  --ap-confirm-column: 190px;
-  --ap-close-column: 38px;
   position: fixed;
   bottom: var(--ap-booking-panel-bottom-gap);
   left: 0;
   right: 0;
-  height: calc(var(--ap-bar-height) + env(safe-area-inset-bottom, 0px));
   min-height: calc(var(--ap-bar-height) + env(safe-area-inset-bottom, 0px));
-  overflow: hidden;
+  max-height: calc(100dvh - 2rem);
+  overflow: visible;
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(16px);
   border-top: 1px solid rgba(226, 232, 240, 0.9);
   box-shadow: 0 -14px 40px rgba(15, 23, 42, 0.08);
-  padding: 0.9rem 1rem calc(1rem + env(safe-area-inset-bottom, 0px));
+  padding: 1rem 1.25rem calc(1.2rem + env(safe-area-inset-bottom, 0px));
   z-index: 100;
   box-sizing: border-box;
 }
@@ -721,19 +723,17 @@
 }
 
 .ap-floating-inner {
-  max-width: 1120px;
-  height: calc(var(--ap-bar-height) - 1.9rem);
-  min-height: calc(var(--ap-bar-height) - 1.9rem);
+  max-width: 1180px;
+  min-height: calc(var(--ap-bar-height) - 2.2rem);
   margin: 0 auto;
   display: grid;
   grid-template-columns:
     var(--ap-summary-column)
-    var(--ap-duration-column)
-    var(--ap-payment-column)
-    var(--ap-confirm-column)
-    var(--ap-close-column);
+    var(--ap-controls-column)
+    var(--ap-confirm-column);
   align-items: center;
-  gap: 0.85rem;
+  gap: 1.25rem;
+  padding-right: 3.15rem;
   position: relative;
   box-sizing: border-box;
 }
@@ -741,12 +741,11 @@
 .ap-floating-info {
   grid-column: 1;
   min-width: 0;
-  height: 100%;
-  align-self: stretch;
-  display: grid;
-  grid-template-rows: auto 31px 36px 56px;
-  gap: 0.32rem;
-  align-content: start;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.42rem;
 }
 
 .ap-floating-price-group {
@@ -788,10 +787,9 @@
 
 .ap-floating-feedback {
   width: 100%;
-  height: 55px;
-  min-height: 55px;
+  min-height: 46px;
   margin: 0;
-  padding: 0.48rem 0.68rem;
+  padding: 0.52rem 0.72rem;
   border-radius: 12px;
   background: #e2e8f0;
   color: #475569;
@@ -799,7 +797,7 @@
   font-size: 0.82rem;
   font-weight: 700;
   line-height: 1.3;
-  overflow: hidden;
+  overflow: visible;
   display: flex;
   align-items: center;
   box-sizing: border-box;
@@ -820,8 +818,6 @@
 }
 
 .ap-floating-time {
-  height: 31px;
-  min-height: 31px;
   font-size: 1.15rem;
   color: #0f172a;
   font-weight: 800;
@@ -833,26 +829,31 @@
 }
 
 .ap-floating-controls {
-  display: contents;
-}
-
-.ap-floating-controls .ap-payment-field:first-child {
   grid-column: 2;
-  width: var(--ap-duration-column);
+  display: grid;
+  grid-template-columns: var(--ap-duration-column) var(--ap-payment-column);
+  align-items: end;
+  gap: 0.8rem;
+  min-width: 0;
 }
 
-.ap-floating-controls .ap-payment-field:nth-child(2) {
+.ap-floating-cta {
   grid-column: 3;
-  width: var(--ap-payment-column);
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 0;
 }
 
 .ap-payment-field {
   display: flex;
   flex-direction: column;
   gap: 0.38rem;
-  min-height: 72px;
+  min-height: 0;
   align-self: center;
   justify-content: flex-start;
+  min-width: 0;
 }
 
 .ap-payment-label {
@@ -923,8 +924,8 @@
 }
 
 .ap-reserve-btn {
-  grid-column: 4;
-  width: var(--ap-confirm-column);
+  width: 100%;
+  max-width: 220px;
   height: 52px;
   min-height: 52px;
   padding: 0.86rem 1.7rem;
@@ -946,13 +947,6 @@
   box-sizing: border-box;
 }
 
-.ap-floating-close {
-  grid-column: 5;
-  align-self: start;
-  justify-self: end;
-  margin-top: -35px;
-}
-
 .ap-reserve-btn:hover:not(:disabled) {
   background: var(--gradient-primary-hover);
   transform: translateY(-1px);
@@ -972,11 +966,16 @@
 
 @media (max-width: 1140px) and (min-width: 769px) {
   .ap-floating-action {
-    --ap-summary-column: minmax(260px, 1fr);
+    --ap-summary-column: minmax(270px, 1fr);
+    --ap-controls-column: minmax(330px, auto);
+    --ap-confirm-column: minmax(188px, auto);
     --ap-duration-column: 124px;
-    --ap-payment-column: 276px;
-    --ap-confirm-column: 176px;
-    --ap-close-column: 36px;
+    --ap-payment-column: 268px;
+  }
+
+  .ap-floating-inner {
+    gap: 0.9rem;
+    padding-right: 2.8rem;
   }
 
   .ap-payment-option {
@@ -1267,30 +1266,35 @@
   }
 
   .ap-floating-action {
-    height: calc(var(--ap-bottom-bar-height) + env(safe-area-inset-bottom, 0px));
+    min-height: calc(var(--ap-bottom-bar-height) + env(safe-area-inset-bottom, 0px));
+    max-height: calc(100dvh - 1rem);
+    overflow-x: hidden;
+    overflow-y: auto;
     padding: 0.75rem 0.85rem;
     padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
   }
 
   .ap-floating-inner {
-    height: calc(var(--ap-bottom-bar-height) - 1.5rem);
     min-height: calc(var(--ap-bottom-bar-height) - 1.5rem);
     grid-template-columns: minmax(0, 1fr) 34px;
-    grid-template-rows: 140px 54px 54px 48px;
+    grid-template-rows: minmax(132px, auto) auto 48px;
     align-items: stretch;
     gap: 0.5rem;
+    padding-right: 0;
   }
 
   .ap-floating-controls {
-    display: contents;
+    grid-column: 1 / 3;
+    grid-row: 2;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    align-items: stretch;
   }
 
   .ap-floating-close {
-    grid-column: 2;
-    grid-row: 1;
-    place-self: start end;
     top: 0;
-    margin-top: 0;
+    right: 0;
     width: 32px;
     height: 32px;
     border-radius: 9px;
@@ -1301,15 +1305,12 @@
     grid-column: 1;
     grid-row: 1;
     width: 100%;
-    height: 100%;
     align-self: stretch;
-    grid-template-rows: 15px 34px 30px 47px;
+    padding-right: 0.4rem;
     gap: 0.25rem;
   }
 
   .ap-floating-time {
-    height: 34px;
-    min-height: 34px;
     font-size: 0.94rem;
     line-height: 1.24;
     -webkit-line-clamp: 2;
@@ -1362,7 +1363,6 @@
   }
 
   .ap-floating-feedback {
-    height: 47px;
     min-height: 47px;
     padding: 0.38rem 0.52rem;
     border-radius: 10px;
@@ -1385,16 +1385,8 @@
   .ap-floating-controls .ap-payment-field:first-child,
   .ap-floating-controls .ap-payment-field:nth-child(2) {
     width: 100%;
-  }
-
-  .ap-floating-controls .ap-payment-field:first-child {
-    grid-column: 1 / 3;
-    grid-row: 2;
-  }
-
-  .ap-floating-controls .ap-payment-field:nth-child(2) {
-    grid-column: 1 / 3;
-    grid-row: 3;
+    grid-column: auto;
+    grid-row: auto;
   }
 
   .ap-payment-toggle {
@@ -1421,10 +1413,17 @@
     min-width: 0;
   }
 
-  .ap-reserve-btn {
+  .ap-floating-cta {
     grid-column: 1 / 3;
-    grid-row: 4;
+    grid-row: 3;
+    align-self: stretch;
+    align-items: center;
+    justify-content: stretch;
+  }
+
+  .ap-reserve-btn {
     width: 100%;
+    max-width: none;
     height: 48px;
     min-height: 48px;
     padding: 0.7rem 1rem;

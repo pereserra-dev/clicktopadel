@@ -1358,6 +1358,9 @@ function AvailabilityPage() {
                 </div>
               </div>
 
+            </div>
+
+            <div className="ap-floating-cta">
               <button
                 onClick={handleReserve}
                 disabled={reserving || !selectedSlotCanReserve}
