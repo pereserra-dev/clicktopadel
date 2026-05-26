@@ -1,4 +1,6 @@
 .admin__page {
+  --admin-content-max: var(--container);
+  --admin-section-gap: 1.35rem;
   padding: 1.25rem 0 2.4rem;
   background:
     radial-gradient(circle at 12% 0%, rgba(20, 184, 166, 0.1), transparent 24rem),
@@ -6,7 +8,8 @@
 }
 
 .admin__container {
-  max-width: 1120px;
+  width: 100%;
+  max-width: var(--admin-content-max);
   margin: 0 auto;
   padding: 0 1.5rem;
 }
@@ -15,26 +18,27 @@
   padding: 0 1rem;
 }
 
+/* Admin hero density tuning: revert this block to restore the previous larger hero. */
 .admin__hero {
   position: relative;
   overflow: hidden;
-  border-radius: 30px;
-  padding: 0.9rem 1.1rem;
-  margin-bottom: 0.9rem;
+  border-radius: 26px;
+  padding: 0.8rem 1rem;
+  margin-bottom: 1.1rem;
   background: var(--gradient-hero);
   box-shadow: var(--shadow-premium);
   color: #ffffff;
 }
 
 .admin__hero--mobile {
-  padding: 1.3rem;
-  border-radius: 24px;
+  padding: 1rem;
+  border-radius: 22px;
 }
 
 .admin__hero-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.08fr) minmax(300px, 0.92fr);
-  gap: 1.4rem;
+  grid-template-columns: minmax(0, 1.12fr) minmax(300px, 0.88fr);
+  gap: 1rem;
   align-items: center;
 }
 
@@ -49,10 +53,10 @@
 }
 
 .admin__title {
-  margin: 0.55rem 0 0 0;
-  font-size: 2.3rem;
+  margin: 0.42rem 0 0 0;
+  font-size: 2.15rem;
   line-height: 1.04;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.03em;
 }
 
 .admin__title--mobile {
@@ -60,18 +64,18 @@
 }
 
 .admin__subtitle {
-  margin: 0.65rem 0 0 0;
-  max-width: 680px;
+  margin: 0.5rem 0 0 0;
+  max-width: 640px;
   color: rgba(255, 255, 255, 0.84);
-  font-size: 0.96rem;
-  line-height: 1.58;
+  font-size: 0.94rem;
+  line-height: 1.48;
 }
 
 .admin__role-notice {
-  width: min(100%, 680px);
-  margin-top: 0.8rem;
-  padding: 0.72rem 0.85rem;
-  border-radius: 18px;
+  width: min(100%, 640px);
+  margin-top: 0.65rem;
+  padding: 0.62rem 0.78rem;
+  border-radius: 16px;
   background: rgba(255, 255, 255, 0.12);
   border: 1px solid rgba(255, 255, 255, 0.16);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
@@ -97,23 +101,23 @@
 .admin__role-notice-text {
   margin: 0;
   color: rgba(255, 255, 255, 0.88);
-  font-size: 0.9rem;
+  font-size: 0.86rem;
   font-weight: 600;
-  line-height: 1.45;
+  line-height: 1.38;
 }
 
 .admin__hero-tabs {
   display: inline-flex;
   align-items: center;
   justify-content: flex-start;
-  gap: 0.4rem;
+  gap: 0.35rem;
   flex-wrap: nowrap;
   align-self: flex-start;
-  margin-top: 1.15rem;
+  margin-top: 0.88rem;
   margin-left: 0;
   margin-right: 0;
-  padding: 0.28rem;
-  border-radius: 16px;
+  padding: 0.25rem;
+  border-radius: 15px;
   background: linear-gradient(135deg, rgba(8, 15, 32, 0.34), rgba(30, 41, 59, 0.22));
   border: 1px solid rgba(255, 255, 255, 0.14);
   box-shadow:
@@ -134,8 +138,8 @@
 .admin__hero-tab {
   position: relative;
   flex: 0 0 auto;
-  min-height: 42px;
-  padding: 0.66rem 0.9rem;
+  min-height: 38px;
+  padding: 0.56rem 0.78rem;
   border: 1px solid transparent;
   border-radius: 12px;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
@@ -201,22 +205,23 @@
   align-items: center;
   justify-content: center;
   white-space: nowrap;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   line-height: 1;
 }
 
 .admin__hero-panel {
+  align-self: stretch;
   background: rgba(255, 255, 255, 0.11);
   border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 24px;
-  padding: 0.95rem;
+  border-radius: 20px;
+  padding: 0.75rem;
   backdrop-filter: blur(10px);
 }
 
 .admin__hero-panel-label {
   display: block;
-  margin-bottom: 0.85rem;
-  font-size: 0.8rem;
+  margin-bottom: 0.58rem;
+  font-size: 0.74rem;
   font-weight: 800;
   opacity: 0.84;
   text-transform: uppercase;
@@ -226,12 +231,12 @@
 .admin__hero-panel-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.75rem;
+  gap: 0.55rem;
 }
 
 .admin__hero-panel-card {
-  border-radius: 18px;
-  padding: 0.8rem 0.9rem;
+  border-radius: 14px;
+  padding: 0.62rem 0.72rem;
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.1);
   transition:
@@ -251,17 +256,18 @@
 .admin__hero-panel-card-label {
   display: block;
   color: rgba(255, 255, 255, 0.78);
-  font-size: 0.8rem;
+  font-size: 0.74rem;
   font-weight: 700;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.22rem;
 }
 
 .admin__hero-panel-card-value {
   color: #ffffff;
-  font-size: 1.8rem;
+  font-size: 1.45rem;
   font-weight: 800;
   line-height: 1;
 }
+/* End admin hero density tuning. */
 
 .admin__feedback-section {
   margin-bottom: 1rem;
@@ -299,7 +305,7 @@
 }
 
 .admin__section {
-  margin-bottom: 1.85rem;
+  margin-bottom: var(--admin-section-gap);
 }
 
 .admin__section-header {
@@ -339,7 +345,7 @@
 }
 
 .admin__section-card {
-  border-radius: 24px;
+  border-radius: 22px;
   padding: 0.9rem;
   background: var(--gradient-card);
   border: 1px solid rgba(148, 163, 184, 0.14);
@@ -347,29 +353,60 @@
 }
 
 .admin__section-card > .court-form__wrapper {
-  width: min(100%, 960px);
-  margin: 0 auto;
-  gap: 0.8rem;
+  width: 100%;
+  margin: 0;
+  gap: 0.68rem;
 }
 
 .admin__section-card > .court-form__wrapper .court-form__top-panel {
-  gap: 0.85rem;
-  padding: 0.85rem;
-  border-radius: 20px;
+  grid-template-columns: minmax(0, 0.95fr) minmax(320px, 1.05fr);
+  gap: 0.7rem;
+  padding: 0.75rem;
+  border-radius: 18px;
 }
 
 .admin__section-card > .court-form__wrapper .court-form__form-grid {
-  gap: 0.75rem;
+  gap: 0.68rem;
 }
 
 .admin__section-card > .court-form__wrapper .court-form__input,
 .admin__section-card > .court-form__wrapper .court-form__textarea {
-  padding: 0.78rem 0.9rem;
-  border-radius: 16px;
+  min-height: 42px;
+  padding: 0.68rem 0.82rem;
+  border-radius: 14px;
+  font-size: 0.95rem;
 }
 
 .admin__section-card > .court-form__wrapper .court-form__textarea {
-  min-height: 108px;
+  min-height: 94px;
+}
+
+.admin__section-card > .court-form__wrapper .court-form__field {
+  gap: 0.34rem;
+}
+
+.admin__section-card > .court-form__wrapper .court-form__helper-text {
+  font-size: 0.78rem;
+  line-height: 1.38;
+}
+
+.admin__section-card > .court-form__wrapper .court-form__preview-panel,
+.admin__section-card > .court-form__wrapper .court-form__info-panel {
+  padding: 0.76rem;
+  border-radius: 16px;
+}
+
+.admin__section-card > .court-form__wrapper .court-form__preview-title {
+  margin-top: 0.48rem;
+}
+
+.admin__section-card > .court-form__wrapper .court-form__preview-badges {
+  margin-top: 0.5rem;
+}
+
+.admin__section-card > .court-form__wrapper .court-form__preview-description {
+  margin-top: 0.56rem;
+  line-height: 1.45;
 }
 
 .admin__section-card > .court-form__wrapper .court-form__actions {
@@ -810,8 +847,8 @@
 
 .admin__court-tools-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.3fr) minmax(160px, 0.7fr) minmax(160px, 0.7fr) auto;
-  gap: 0.85rem;
+  grid-template-columns: minmax(0, 1.25fr) minmax(150px, 0.55fr) minmax(150px, 0.55fr) max-content;
+  gap: 0.65rem;
   align-items: end;
 }
 
@@ -835,12 +872,12 @@
 .admin__court-filter-field {
   display: flex;
   flex-direction: column;
-  gap: 0.45rem;
+  gap: 0.36rem;
 }
 
 .admin__filter-label {
   color: #334155;
-  font-size: 0.9rem;
+  font-size: 0.84rem;
   font-weight: 800;
 }
 
@@ -857,7 +894,11 @@
 .admin__section-card--courts-tools .pb-input {
   box-sizing: border-box;
   width: 100%;
+  min-height: 42px;
   min-width: 0;
+  padding: 0.68rem 0.8rem;
+  border-radius: 14px;
+  font-size: 0.94rem;
 }
 
 .admin__section-card--courts-tools .admin__court-filter-actions {
@@ -865,15 +906,16 @@
 }
 
 .admin__section-card--courts-tools .admin__court-filter-actions .btn {
-  min-height: 44px;
+  min-height: 42px;
+  padding: 0.68rem 0.9rem;
   white-space: nowrap;
 }
 
 .admin__court-quick-stats {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.85rem;
-  margin-top: 1rem;
+  gap: 0.6rem;
+  margin-top: 0.68rem;
 }
 
 .admin__court-quick-stats--mobile {
@@ -881,8 +923,12 @@
 }
 
 .admin__court-quick-stat {
-  border-radius: 18px;
-  padding: 0.95rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem;
+  border-radius: 14px;
+  padding: 0.62rem 0.72rem;
   border: 1px solid rgba(148, 163, 184, 0.14);
   background: var(--gradient-card);
 }
@@ -890,51 +936,29 @@
 .admin__court-quick-stat-label {
   display: block;
   color: #64748b;
-  font-size: 0.78rem;
+  font-size: 0.72rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  margin-bottom: 0.35rem;
+  margin-bottom: 0;
 }
 
 .admin__court-quick-stat-value {
   color: #0f172a;
-  font-size: 1.15rem;
-  font-weight: 800;
-}
-
-.admin__court-tools-grid {
-  gap: 0.75rem;
-}
-
-.admin__court-quick-stats {
-  gap: 0.75rem;
-  margin-top: 0.85rem;
-}
-
-.admin__court-quick-stat {
-  border-radius: 16px;
-  padding: 0.8rem 0.9rem;
-}
-
-.admin__court-quick-stat-label {
-  margin-bottom: 0.22rem;
-}
-
-.admin__court-quick-stat-value {
   font-size: 1.05rem;
+  font-weight: 800;
 }
 
 .admin__cards {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0.75rem;
+  gap: 0.72rem;
   align-items: start;
-  margin-top: 0.85rem;
+  margin-top: 0.78rem;
 }
 
 .admin__cards--courts {
-  grid-template-columns: repeat(auto-fill, minmax(248px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 270px), 1fr));
 }
 
 .admin__court-card-shell {
@@ -943,9 +967,9 @@
 }
 
 .admin__cards--courts .court-card {
-  gap: 0.62rem;
-  padding: 0.85rem;
-  border-radius: 20px;
+  gap: 0.54rem;
+  padding: 0.78rem;
+  border-radius: 18px;
   min-width: 0;
   overflow: hidden;
   box-shadow: 0 10px 24px rgba(15, 23, 42, 0.04);
@@ -965,17 +989,17 @@
 }
 
 .admin__cards--courts .court-card__meta-grid {
-  gap: 0.5rem;
+  gap: 0.45rem;
 }
 
 .admin__cards--courts .court-card__meta-item {
-  padding: 0.58rem 0.68rem;
-  border-radius: 14px;
+  padding: 0.5rem 0.62rem;
+  border-radius: 13px;
 }
 
 .admin__cards--courts .court-card__description-box {
-  padding: 0.62rem 0.72rem;
-  border-radius: 14px;
+  padding: 0.54rem 0.64rem;
+  border-radius: 13px;
 }
 
 .admin__cards--courts .court-card__title,
@@ -1970,7 +1994,13 @@
 }
 
 .admin__maintenance-panel {
-  margin-bottom: 1rem;
+  width: 100%;
+  margin-top: 0.85rem;
+  margin-bottom: 0.75rem;
+}
+
+.admin__maintenance-panel .admin__court-tools-grid {
+  grid-template-columns: minmax(0, 1.25fr) minmax(180px, 0.55fr) max-content;
 }
 
 .admin__section-card--subtle {
@@ -1984,9 +2014,9 @@
 .admin__maintenance-stats {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.7rem;
-  margin-top: 0.75rem;
-  margin-bottom: 0.75rem;
+  gap: 0.6rem;
+  margin-top: 0.65rem;
+  margin-bottom: 0.65rem;
 }
 
 .admin__maintenance-stats--mobile {
@@ -1994,8 +2024,8 @@
 }
 
 .admin__maintenance-stat {
-  padding: 0.75rem 0.85rem;
-  border-radius: 16px;
+  padding: 0.62rem 0.72rem;
+  border-radius: 14px;
   background: #f8fafc;
   border: 1px solid #e2e8f0;
 }
@@ -2003,7 +2033,7 @@
 .admin__maintenance-stat-label {
   display: block;
   color: #64748b;
-  font-size: 0.78rem;
+  font-size: 0.72rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -2012,14 +2042,14 @@
 
 .admin__maintenance-stat-value {
   color: #0f172a;
-  font-size: 1.35rem;
+  font-size: 1.12rem;
   font-weight: 800;
   line-height: 1;
 }
 
 .admin__maintenance-list {
   display: grid;
-  gap: 0.65rem;
+  gap: 0.56rem;
 }
 
 .admin__maintenance-toggle {
@@ -2029,8 +2059,8 @@
 }
 
 .admin__maintenance-card {
-  padding: 0.68rem 0.78rem;
-  border-radius: 16px;
+  padding: 0.62rem 0.72rem;
+  border-radius: 14px;
   border: 1px solid rgba(148, 163, 184, 0.16);
   background: linear-gradient(180deg, #ffffff, #f8fbff);
   box-shadow: 0 8px 18px rgba(15, 23, 42, 0.035);
@@ -2040,8 +2070,8 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 0.65rem;
-  margin-bottom: 0.42rem;
+  gap: 0.58rem;
+  margin-bottom: 0.34rem;
 }
 
 .admin__maintenance-card-kicker {
@@ -2079,7 +2109,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.34rem;
-  margin-bottom: 0.42rem;
+  margin-bottom: 0.34rem;
 }
 
 .admin__maintenance-meta-item {
@@ -2094,7 +2124,7 @@
 }
 
 .admin__maintenance-reason {
-  margin: 0 0 0.48rem 0;
+  margin: 0 0 0.4rem 0;
   color: #334155;
   font-size: 0.9rem;
   line-height: 1.42;
@@ -2104,7 +2134,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.65rem;
+  gap: 0.58rem;
 }
 
 .admin__maintenance-created-at {
@@ -2130,18 +2160,15 @@
 }
 
 .admin__maintenance-editor {
-  width: min(100%, 980px);
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 0.7rem;
-  margin-bottom: 0.45rem;
+  width: 100%;
+  margin: 0.85rem 0 0;
 }
 
 .admin__maintenance-edit-grid {
   display: grid;
-  grid-template-columns: 1.15fr 1fr 1fr 0.95fr;
-  gap: 0.55rem;
-  margin-top: 0.55rem;
+  grid-template-columns: minmax(220px, 1.2fr) repeat(3, minmax(140px, 1fr));
+  gap: 0.6rem;
+  margin-top: 0.6rem;
 }
 
 .admin__maintenance-edit-grid--mobile {
@@ -2154,7 +2181,7 @@
 
 .admin__maintenance-textarea,
 .admin__maintenance-edit-grid input[type="date"] {
-  min-height: 62px;
+  min-height: 42px;
   resize: vertical;
   font-family: inherit;
   font-size: 1rem;
@@ -2169,8 +2196,9 @@
 
 .admin__maintenance-edit-actions {
   display: flex;
-  gap: 0.45rem;
-  margin-top: 0.55rem;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 0.6rem;
   flex-wrap: wrap;
 }
 
@@ -2329,7 +2357,7 @@
 }
 
 .admin__section--reservations .admin__section-header {
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.68rem;
 }
 
 .admin__section--reservations .admin__section-header > div {
@@ -2950,7 +2978,7 @@
 }
 
 @media (max-width: 1024px) and (min-width: 769px) {
-  .admin__section-card--court-form .court-form__top-panel {
+  .admin__section-card--court-form > .court-form__wrapper .court-form__top-panel {
     grid-template-columns: 1fr;
   }
 
@@ -2969,6 +2997,20 @@
 
   .admin__cards--courts {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .admin__maintenance-panel .admin__court-tools-grid,
+  .admin__maintenance-editor .admin__maintenance-edit-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .admin__maintenance-panel .admin__court-filter-actions,
+  .admin__maintenance-editor .admin__maintenance-edit-field-full {
+    grid-column: 1 / -1;
+  }
+
+  .admin__maintenance-panel .admin__court-filter-actions {
+    justify-self: end;
   }
 }
 
@@ -2998,7 +3040,8 @@
     gap: 0.65rem;
   }
 
-  .admin__section-card--court-form .court-form__top-panel {
+  .admin__section-card--court-form > .court-form__wrapper .court-form__top-panel {
+    grid-template-columns: 1fr;
     padding: 0.7rem;
     border-radius: 16px;
   }
@@ -3061,6 +3104,11 @@
 
   .admin__section-card--courts-tools .admin__court-tools-grid {
     gap: 0.62rem;
+  }
+
+  .admin__maintenance-panel .admin__court-tools-grid,
+  .admin__maintenance-editor .admin__maintenance-edit-grid {
+    grid-template-columns: 1fr;
   }
 
   .admin__section-card--courts-tools .admin__court-filter-actions {

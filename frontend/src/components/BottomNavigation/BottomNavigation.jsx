@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { getUserFromToken } from "../utils/auth";
+import { getUserFromToken } from "../../utils/auth";
 import "./BottomNavigation.css";
 
 const navItems = [
