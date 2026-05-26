@@ -55,7 +55,7 @@ function AvailabilityPage() {
   const [showAuthHelp, setShowAuthHelp] = useState(false);
   const [showVerificationHelp, setShowVerificationHelp] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("online_simulat");
-  const [selectedDuration, setSelectedDuration] = useState(2);
+  const [selectedDuration, setSelectedDuration] = useState(3);
   const [selectedSlot, setSelectedSlot] = useState(null);
   const [openCourtId, setOpenCourtId] = useState(null);
   const [reservationSummary, setReservationSummary] = useState(null);
@@ -199,7 +199,7 @@ function AvailabilityPage() {
     setShowAuthHelp(false);
     setShowVerificationHelp(false);
     setReservationSummary(null);
-    setSelectedDuration(2);
+    setSelectedDuration(3);
   };
 
   // Funció per obrir el selector de data ocult, amb maneig de compatibilitat per diferents navegadors
@@ -471,6 +471,18 @@ function AvailabilityPage() {
     });
 
     if (matchedSlot && matchedSlot.disponible) {
+      const matchedCourtSlots =
+        allCourtsData.find((court) => court.court_id === matchedSlot.court_id)
+          ?.slots || [];
+      const matchedSlotIndex = matchedCourtSlots.findIndex(
+        (courtSlot) => courtSlot.time_slot_id === matchedSlot.time_slot_id
+      );
+
+      setSelectedDuration(
+        isSlotValidForDuration(matchedSlot, matchedCourtSlots, matchedSlotIndex, 3)
+          ? 3
+          : 2
+      );
       setSelectedSlot(matchedSlot);
       setSuccess("");
       setError("");
@@ -610,10 +622,15 @@ function AvailabilityPage() {
     };
   }, [availabilitySummary]);
 
-  const isSlotValidForDuration = (slot, courtSlots, slotIndex) => {
+  const isSlotValidForDuration = (
+    slot,
+    courtSlots,
+    slotIndex,
+    duration = selectedDuration
+  ) => {
     if (!slot.disponible) return false;
 
-    const slotsNeeded = Number(selectedDuration);
+    const slotsNeeded = Number(duration);
 
     for (let i = 0; i < slotsNeeded; i += 1) {
       const currentSlot = courtSlots[slotIndex + i];
@@ -673,7 +690,22 @@ function AvailabilityPage() {
     setShowVerificationHelp(false);
     setReservationSummary(null);
 
-    setSelectedSlot(isSelected ? null : slot);
+    if (isSelected) {
+      setSelectedSlot(null);
+      return;
+    }
+
+    const selectedCourtSlots =
+      allCourtsData.find((court) => court.court_id === slot.court_id)?.slots ||
+      [];
+    const slotIndex = selectedCourtSlots.findIndex(
+      (courtSlot) => courtSlot.time_slot_id === slot.time_slot_id
+    );
+
+    setSelectedDuration(
+      isSlotValidForDuration(slot, selectedCourtSlots, slotIndex, 3) ? 3 : 2
+    );
+    setSelectedSlot(slot);
   };
 
   const getCourtClosingTime = (courtSlots) => {
@@ -1258,11 +1290,13 @@ function AvailabilityPage() {
 
               <p
                 className={`ap-floating-feedback ${
-                  selectedSlotCanReserve ? "is-empty" : ""
+                  selectedSlotCanReserve ? "is-valid" : ""
                 }`}
                 aria-live="polite"
               >
-                {selectedSlotCanReserve ? "\u00a0" : selectedSlotUnavailableMessage}
+                {selectedSlotCanReserve
+                  ? "Reserva disponible per a aquesta pista i duració."
+                  : selectedSlotUnavailableMessage}
               </p>
             </div>
 
@@ -1274,23 +1308,23 @@ function AvailabilityPage() {
                   <button
                     type="button"
                     className={`ap-payment-option ${
-                      selectedDuration === 2 ? "is-active" : ""
-                    }`}
-                    onClick={() => setSelectedDuration(2)}
-                    disabled={reserving}
-                  >
-                    1h
-                  </button>
-
-                  <button
-                    type="button"
-                    className={`ap-payment-option ${
                       selectedDuration === 3 ? "is-active" : ""
                     }`}
                     onClick={() => setSelectedDuration(3)}
                     disabled={reserving}
                   >
                     1h30
+                  </button>
+
+                  <button
+                    type="button"
+                    className={`ap-payment-option ${
+                      selectedDuration === 2 ? "is-active" : ""
+                    }`}
+                    onClick={() => setSelectedDuration(2)}
+                    disabled={reserving}
+                  >
+                    1h
                   </button>
                 </div>
               </div>
