@@ -414,27 +414,15 @@ function RegisterPage() {
             isMobileView ? "register__form-card--mobile" : ""
           }`}
         >
-          <div className="register__form-top">
-            {isMobileView ? (
-              <>
-                <h2 className="register__form-title">
-                  Uneix-te a{" "}
-                  <span className="register__mobile-brand">PadelBook</span>
-                </h2>
-                <span className="register__mobile-title-line" aria-hidden="true" />
-                <p className="register__form-text">
-                  Crea el teu compte i comença a reservar.
-                </p>
-              </>
-            ) : (
-              <>
-                <span className="register__form-kicker">Registre</span>
-                <h2 className="register__form-title">Crear compte</h2>
-                <p className="register__form-text">
-                  Omple el formulari i comença a utilitzar la plataforma.
-                </p>
-              </>
-            )}
+          <div className="register__form-top pb-auth-header">
+            <h2 className="register__form-title pb-auth-title">
+              Uneix-te a{" "}
+              <span className="pb-auth-brand">PadelBook</span>
+            </h2>
+            <span className="pb-auth-title-line" aria-hidden="true" />
+            <p className="register__form-text pb-auth-text">
+              Crea el teu compte i comença a reservar.
+            </p>
           </div>
 
           <div ref={feedbackRef} />

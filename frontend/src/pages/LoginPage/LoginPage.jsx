@@ -426,27 +426,15 @@ function LoginPage() {
             isMobileView ? "login__form-card--mobile" : ""
           }`}
         >
-          <div className="login__form-top">
-            {isMobileView ? (
-              <>
-                <h2 className="login__form-title">
-                  Benvingut a{" "}
-                  <span className="login__mobile-brand">PadelBook</span>
-                </h2>
-                <span className="login__mobile-title-line" aria-hidden="true" />
-                <p className="login__form-text">
-                  Inicia sessió amb el teu compte i continua reservant pistes.
-                </p>
-              </>
-            ) : (
-              <>
-                <span className="login__form-kicker">Iniciar sessió</span>
-                <h2 className="login__form-title">Benvingut de nou</h2>
-                <p className="login__form-text">
-                  Introdueix les teves credencials per accedir al teu compte.
-                </p>
-              </>
-            )}
+          <div className="login__form-top pb-auth-header">
+            <h2 className="login__form-title pb-auth-title">
+              Benvingut a{" "}
+              <span className="pb-auth-brand">PadelBook</span>
+            </h2>
+            <span className="pb-auth-title-line" aria-hidden="true" />
+            <p className="login__form-text pb-auth-text">
+              Inicia sessió amb el teu compte i continua reservant pistes.
+            </p>
           </div>
 
           <div ref={feedbackRef} />
