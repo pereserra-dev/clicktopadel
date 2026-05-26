@@ -1296,7 +1296,7 @@ function AvailabilityPage() {
                 aria-live="polite"
               >
                 {selectedSlotCanReserve
-                  ? "Reserva disponible per a aquesta pista i duració."
+                  ? "Aquesta franja està disponible per continuar amb la reserva."
                   : selectedSlotUnavailableMessage}
               </p>
             </div>

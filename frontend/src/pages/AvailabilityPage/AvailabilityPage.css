@@ -1,5 +1,6 @@
 .ap-wrapper {
   --ap-bottom-bar-height: 184px;
+  --ap-booking-panel-bottom-gap: 1.35rem;
   background:
     radial-gradient(circle at 14% 0%, rgba(20, 184, 166, 0.12), transparent 25rem),
     radial-gradient(circle at 88% 0%, rgba(37, 99, 235, 0.14), transparent 26rem),
@@ -21,7 +22,7 @@
 
 .ap-container--with-bottom-bar {
   padding-bottom: calc(
-    var(--ap-bottom-bar-height) + env(safe-area-inset-bottom, 0px) + 1.25rem
+    var(--ap-bottom-bar-height) + var(--ap-booking-panel-bottom-gap) + env(safe-area-inset-bottom, 0px) + 1.25rem
   );
 }
 
@@ -674,7 +675,7 @@
   --ap-confirm-column: 190px;
   --ap-close-column: 38px;
   position: fixed;
-  bottom: 0;
+  bottom: var(--ap-booking-panel-bottom-gap);
   left: 0;
   right: 0;
   height: calc(var(--ap-bar-height) + env(safe-area-inset-bottom, 0px));
@@ -1143,6 +1144,7 @@
 @media (max-width: 768px) {
   .ap-wrapper {
     --ap-bottom-bar-height: 348px;
+    --ap-booking-panel-bottom-gap: 1rem;
   }
 
   .ap-container {
@@ -1151,7 +1153,7 @@
 
   .ap-container--with-bottom-bar {
     padding-bottom: calc(
-      var(--ap-bottom-bar-height) + env(safe-area-inset-bottom, 0px) + 0.85rem
+      var(--ap-bottom-bar-height) + var(--ap-booking-panel-bottom-gap) + env(safe-area-inset-bottom, 0px) + 0.85rem
     );
   }
 
