@@ -149,7 +149,7 @@ function HomePage() {
               <p className="home__subtitle">
                 PadelBook és una aplicació web pensada perquè consultar
                 disponibilitat, reservar i gestionar pistes sigui fàcil, visual i
-                intuitiu. Menys fricció, més sensació de producte real.
+                intuïtiu. Menys fricció, més sensació de producte real.
               </p>
 
               <div
